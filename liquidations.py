@@ -51,7 +51,7 @@ log_df=pd.read_csv('liqs.csv')
 master_df=pd.DataFrame()
 i=0
 ws = websocket.WebSocket()
-
+mail_counter=0
 # Connect to the WebSocket
 ws.connect(url)
 while True:
@@ -79,10 +79,9 @@ while True:
         log_df=pd.concat([log_df,final])
         master_df=pd.DataFrame()
         log_df.to_csv('liqs.csv',index=False,mode='w+')
-    
-    if i > 500:
-        send_mail('liqs.csv')
-        
-        
+        mail_counter+=1
+        if mail_counter > 10:  #send mail for every new 10 coins
+            send_mail('liqs.csv')
+            mail_counter=0
         
         
