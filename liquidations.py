@@ -71,16 +71,16 @@ while True:
     final['funding_rate']=round(final['funding_rate'],4)
     final['time']=datetime.now(ist_timezone)
     final.sort_values(by=['liq_amount','funding_rate'],ascending=False,inplace=True)
-    if max(final['liq_amount'])>20000:
+    if max(final['liq_amount'])>30000:
         amount_symbol_dict=dict(list(zip(final['liq_amount'],final['s'])))
         print(amount_symbol_dict[max(final['liq_amount'])])
         symbol=amount_symbol_dict[max(final['liq_amount'])]
         final=final[final['liq_amount']>20000]
         log_df=pd.concat([log_df,final])
-        master_df=pd.DataFrame()
+        master_df=master_df[master_df['s']!=symbol]
         log_df.to_csv('liqs.csv',index=False,mode='w+')
         mail_counter+=1
-        if mail_counter > 10:  #send mail for every new 10 coins
+        if mail_counter > 20:  #send mail for every new 10 coins
             send_mail('liqs.csv')
             mail_counter=0
         
