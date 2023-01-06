@@ -75,9 +75,13 @@ while True:
         amount_symbol_dict=dict(list(zip(final['liq_amount'],final['s'])))
         print(amount_symbol_dict[max(final['liq_amount'])])
         symbol=amount_symbol_dict[max(final['liq_amount'])]
-        final=final[final['liq_amount']>20000]
+        final=final[final['liq_amount']>30000]
+        symbols=final['s'].to_list()
+        print(symbols)
         log_df=pd.concat([log_df,final])
-        master_df=master_df[master_df['s']!=symbol]
+        print(master_df)
+        master_df=master_df[~master_df['s'].isin(symbols)]
+        print(master_df)
         log_df.to_csv('liqs.csv',index=False,mode='w+')
         mail_counter+=1
         if mail_counter > 20:  #send mail for every new 10 coins
