@@ -36,7 +36,7 @@ def create_df(klines,cols,coin,timeframe='_'):
 
 def dataextract(coin,start_str,end_str,interval_,client):
     
-    
+    print(f'{coin}')
     cols = ['OpenTime',
             f'open',
             f'high',
@@ -49,5 +49,5 @@ def dataextract(coin,start_str,end_str,interval_,client):
             f'{coin}-TBBAV',
             f'{coin}-TBQAV',
             f'{coin}-ignore']
-    klines=client.get_historical_klines(symbol=f'{coin}USDT', interval=interval_, start_str=start_str,end_str=end_str,klines_type=HistoricalKlinesType.FUTURES)
+    klines=client.get_historical_klines(symbol=f'{coin}', interval=interval_, start_str=start_str,end_str=end_str,klines_type=HistoricalKlinesType.FUTURES)
     return create_df(klines,cols,coin,interval_)   
