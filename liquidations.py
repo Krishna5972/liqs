@@ -48,6 +48,7 @@ def funding_rate(x,response):
             return response[i]['lastFundingRate']
         
 log_df=pd.read_csv('liqs.csv')
+log_df = pd.DataFrame(columns=log_df.columns)
 master_df=pd.DataFrame()
 i=0
 ws = websocket.WebSocket()
@@ -84,7 +85,7 @@ while True:
         print(master_df)
         log_df.to_csv('liqs.csv',index=False,mode='w+')
         mail_counter+=1
-        if mail_counter > 20:  #send mail for every new 10 coins
+        if mail_counter > 100:  #send mail for every new 100 coins
             send_mail('liqs.csv')
             mail_counter=0
         
